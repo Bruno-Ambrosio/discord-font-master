@@ -4,6 +4,6 @@ module.exports = {
         .setName('criador')
         .setDescription('Diz quem é meu criador'),
         async execute(interaction) {
-        await interaction.reply('Meu criador é o Bruno!')
+        await interaction.reply('Meu criador é caffeine77')
     }
 };

@@ -12,10 +12,10 @@ module.exports = {
         const guild = interaction.guild;
         const membros = await guild.members.fetch();
         const respostas = [];
-        membros.forEach(async (membro) => {
+        for (const membro of membros.values()) {
             console.log(membro.nickname);
             if (!membro.permissions.has(PermissionsBitField.Flags.Administrator)) {
-                const userNumber = interaction.options.getInteger('numero');
+                var userNumber = interaction.options.getInteger('numero');
                 var replacements = {};
                 if (userNumber == 1) {
                     replacements = {
@@ -35,28 +35,37 @@ module.exports = {
                         K: '𝗞', L: '𝗟', M: '𝗠', N: '𝗡', O: '𝗢', P: '𝗣', Q: '𝗤', R: '𝗥', S: '𝗦', T: '𝗧',
                         U: '𝗨', V: '𝗩', W: '𝗪', X: '𝗫', Y: '𝗬', Z: '𝗭',
                         '1': '𝟭', '2': '𝟮', '3': '𝟯', '4': '𝟰', '5': '𝟱', '6': '𝟲', '7': '𝟳', '8': '𝟴', '9': '𝟵', '0': '𝟬'
-                    };
-                }
+                    }
+                };
                 try {
-
-                    if (membro.nickname == null) {
-                        const nomeMembro = membro.user.tag.split('#');
-                        const formattedString = nomeMembro.replace(/[a-zA-Z]/g, char => replacements[char] || char);
-                        membro.setNickname(formattedString);
+                    if (userNumber == 0) {
+                        membro.setNickname(null);
+                        respostas.push('Apelidos removidos!')
                     } else {
-                        const nickMembro = membro.nickname;
-                        const formattedString = nickMembro.replace(/[a-zA-Z]/g, char => replacements[char] || char);
-                        membro.setNickname(formattedString);
+                        if (membro.nickname == null) {
+                            if (membro.user.tag.includes('#')) {
+                                const listaString = membro.user.tag.split('#');
+                                var nomeMembro = listaString[0];
+                            } else {
+                                var nomeMembro = membro.user.tag;
+                            }
+                            console.log(nomeMembro);
+                            const formattedString = nomeMembro.replace(/[a-zA-Z]/g, char => replacements[char] || char);
+                            membro.setNickname(formattedString);
+                        } else {
+                            const nickMembro = membro.nickname;
+                            const formattedString = nickMembro.replace(/[a-zA-Z]/g, char => replacements[char] || char);
+                            membro.setNickname(formattedString);
+                        }
                     }
                 } catch (error) {
                     console.error(`Erro ao trocar apelido para ${membro.user.tag}: ${error}`);
                 }
             } else {
                 respostas.push(`Não foi possível trocar a fonte de ${membro.user.tag} porque ele é um administrador!`)
-            }
-        }
-        );
-        respostas.push(`Apelidos formatados com sucesso!`);
+            };
+        };
+        respostas.push(`Apelidos alterados com sucesso!`);
         await interaction.reply(respostas.join('\n'));
     },
 };
