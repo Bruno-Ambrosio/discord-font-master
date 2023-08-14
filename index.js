@@ -1,26 +1,27 @@
 // Require the necessary discord.js classes
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
+const { Client, Events, GatewayIntentBits, Collection, PermissionsBitField } = require('discord.js');
 const dotenv = require('dotenv');
 dotenv.config();
-const {TOKEN, CLIENT_ID, GUILD_ID} = process.env;
+const { TOKEN, CLIENT_ID, GUILD_ID } = process.env;
 const fs = require('node:fs');
 const path = require('node:path');
+const trocarfonte = require('./commands/trocarfonte');
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 const client = new Client({
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildMembers,
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildModeration,
-	],
+    ],
 });
 client.commands = new Collection();
-for (const file of commandFiles){
+for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const commands = require(filePath);
-    if('data' in commands && 'execute' in commands){
+    if ('data' in commands && 'execute' in commands) {
         client.commands.set(commands.data.name, commands)
     } else {
         console.log(`${filePath}: data ou execute ausente!`)
@@ -30,21 +31,39 @@ for (const file of commandFiles){
 // When the client is ready, run this code (only once)
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, c => {
-	console.log(`Pronto! Login realizado como ${c.user.tag}`);
+    console.log(`Pronto! Login realizado como ${c.user.tag}`);
 });
 
 // Log in to Discord with your client's token
 client.login(TOKEN);
 
 client.on(Events.InteractionCreate, async interaction => {
-    if(!interaction.isChatInputCommand()){
+    if (!interaction.isChatInputCommand()) {
         return;
-    } else {
+    } else if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
         const command = interaction.client.commands.get(interaction.commandName);
-        if(!command){
+        if (!command) {
             console.error('comando não encontrado!')
         } else {
             await command.execute(interaction)
         }
+    } else {
+        interaction.reply('Você não é um administrador!')
+    }
+});
+
+client.on(Events.GuildMemberAdd, async member => {
+    const lastOption = './lastOption.json';
+    const number = require(lastOption)
+    try {
+        const fakeInteraction = {
+            guild: member.guild,
+            options: { getInteger: () => number },
+            reply: async (message) => { console.log(message); }
+        };
+        
+        await trocarfonte.execute(fakeInteraction);
+    } catch (error) {
+        console.error(error);
     }
 });
