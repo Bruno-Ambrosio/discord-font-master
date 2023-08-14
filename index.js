@@ -1,5 +1,5 @@
 // Require the necessary discord.js classes
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
+const { Client, Events, GatewayIntentBits, Collection, PermissionsBitField } = require('discord.js');
 const dotenv = require('dotenv');
 dotenv.config();
 const { TOKEN, CLIENT_ID, GUILD_ID } = process.env;
@@ -40,12 +40,30 @@ client.login(TOKEN);
 client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) {
         return;
-    } else {
+    } else if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
         const command = interaction.client.commands.get(interaction.commandName);
         if (!command) {
             console.error('comando não encontrado!')
         } else {
             await command.execute(interaction)
         }
+    } else {
+        interaction.reply('Você não é um administrador!')
+    }
+});
+
+client.on(Events.GuildMemberAdd, async member => {
+    const lastOption = './lastOption.json';
+    const number = require(lastOption)
+    try {
+        const fakeInteraction = {
+            guild: member.guild,
+            options: { getInteger: () => number },
+            reply: async (message) => { console.log(message); }
+        };
+        
+        await trocarfonte.execute(fakeInteraction);
+    } catch (error) {
+        console.error(error);
     }
 });

@@ -4,6 +4,6 @@ module.exports = {
         .setName('fontes')
         .setDescription('Lista as fontes disponíveis'),
         async execute(interaction) {
-        await interaction.reply('Fontes disponíveis:\n 1 - Math Serif Bold \n 2 - Math Sans Bold')
+        await interaction.reply('Fontes disponíveis:\n 1 - Math Serif Bold \n 2 - Math Sans Bold \n 3 - Math Script - Cursive letters (não suportado)')
     }
 };
