@@ -55,12 +55,19 @@ client.on(Events.InteractionCreate, async interaction => {
 
 client.on(Events.GuildMemberAdd, async member => {
     const lastOption = './lastOption.json';
-    const number = require(lastOption)
+    const servidores = require(lastOption);
+    const number = servidores[member.guild.id];
+    console.log(await member.user.tag);
+    
     try {
         const fakeInteraction = {
             guild: member.guild,
-            options: { getInteger: () => number },
-            reply: async (message) => { console.log(message); }
+            options: {
+                getInteger: () => number
+            },
+            reply: async (message) => {
+                console.log(message);
+            }
         };
 
         await trocarfonte.execute(fakeInteraction);
@@ -68,6 +75,7 @@ client.on(Events.GuildMemberAdd, async member => {
         console.error(error);
     }
 });
+
 
 client.on(Events.GuildCreate, guild => {
     const commandsPath = path.join(__dirname, 'commands');
