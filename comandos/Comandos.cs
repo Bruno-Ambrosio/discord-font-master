@@ -23,7 +23,7 @@ namespace discord_bot.comandos
         [Command("help")]
         public async Task Ajuda(CommandContext context)
         {
-            await context.Channel.SendMessageAsync("Utilize o comando /trocarfonte {parametro} para aplicar apelidos customizados. \n Fontes diponíveis:\n1 - Math Sans Bold \n2 - Math Serif Bold \n0 - Limpar apelidos \nObservação: é necessário ser um administrador para executar o comando /trocarfonte");
+            await context.Channel.SendMessageAsync("Comandos: !sobre !fonte ! help \nUtilize o comando !fonte {parametro} para aplicar apelidos customizados. \nFontes diponíveis:\n1 - Math Sans Bold \n2 - Math Serif Bold \n0 - Limpar apelidos \nObservação: é necessário ser um administrador para executar o comando !fonte");
         }
         [Command("sobre")]
         public async Task Sobre(CommandContext context)
@@ -31,7 +31,7 @@ namespace discord_bot.comandos
             await context.Channel.SendMessageAsync("Um bot criado para gerenciar apelidos usando C# DSharpPlus, por caffeine37");
         }
 
-        [Command("teste")]
+        [Command("fonte")]
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task Trocarfonte(CommandContext context, short parametro = -1)
         {
