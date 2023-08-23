@@ -116,6 +116,24 @@ namespace DiscordFontMaster
    .Replace("6", "𝟲").Replace("7", "𝟳").Replace("8", "𝟴").Replace("9", "𝟵").Replace("0", "𝟬");
 
                     }
+                    if(parametro == 3)
+                    {
+                        nomeFormatado = nome
+                            .Replace("a", "𝒶").Replace("b", "𝒷").Replace("c", "𝒸").Replace("d", "𝒹").Replace("e", "𝑒")
+                            .Replace("f", "𝒻").Replace("g", "𝑔").Replace("h", "𝒽").Replace("i", "𝒾").Replace("j", "𝒿")
+                            .Replace("k", "𝓀").Replace("l", "𝓁").Replace("m", "𝓂").Replace("n", "𝓃").Replace("o", "𝑜")
+                            .Replace("p", "𝓅").Replace("q", "𝓆").Replace("r", "𝓇").Replace("s", "𝓈").Replace("t", "𝓉")
+                            .Replace("u", "𝓊").Replace("v", "𝓋").Replace("w", "𝓌").Replace("x", "𝓍").Replace("y", "𝓎")
+                            .Replace("z", "𝓏")
+                            .Replace("A", "𝒜").Replace("B", "𝐵").Replace("C", "𝒞").Replace("D", "𝒟").Replace("E", "𝐸")
+                            .Replace("F", "𝐹").Replace("G", "𝒢").Replace("H", "𝐻").Replace("I", "𝐼").Replace("J", "𝒥")
+                            .Replace("K", "𝒦").Replace("L", "𝐿").Replace("M", "𝑀").Replace("N", "𝒩").Replace("O", "𝒪")
+                            .Replace("P", "𝒫").Replace("Q", "𝒬").Replace("R", "𝑅").Replace("S", "𝒮").Replace("T", "𝒯")
+                            .Replace("U", "𝒰").Replace("V", "𝒱").Replace("W", "𝒲").Replace("X", "𝒳").Replace("Y", "𝒴")
+                            .Replace("Z", "𝒵")
+                            .Replace("1", "𝟣").Replace("2", "𝟤").Replace("3", "𝟥").Replace("4", "𝟦").Replace("5", "𝟧")
+                            .Replace("6", "𝟨").Replace("7", "𝟩").Replace("8", "𝟪").Replace("9", "𝟫").Replace("0", "𝟢");
+                    }
 
 
                     if (parametro == 0)
